@@ -13,6 +13,7 @@ class App extends Component {
     this.inputValue = this.inputValue.bind(this);
     this.deleteValue = this.deleteValue.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
+    this.calcValue = this.calcValue.bind(this);
   }
 
   inputValue(e){
@@ -32,6 +33,13 @@ class App extends Component {
   clearScreen(){
     this.setState({
       screen: ""
+    })
+  }
+
+  calcValue(){
+    var calculation = eval(this.state.screen);
+    this.setState({
+      screen: calculation.toString()
     })
   }
 
@@ -72,7 +80,7 @@ class App extends Component {
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="00"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="0"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="."/>
-            <input type="button" className="btn btn-success mx-2" value ="="/>
+            <input type="button" onClick={this.calcValue} className="btn btn-success mx-2" value ="="/>
           </div>
       </div>
     );
