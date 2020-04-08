@@ -11,10 +11,18 @@ class App extends Component {
     };
     
     this.inputValue = this.inputValue.bind(this);
+    this.deleteValue = this.deleteValue.bind(this);
   }
 
   inputValue(e){
     var input = this.state.screen + e.target.value;
+    this.setState({
+      screen: input,
+    });
+  }
+
+  deleteValue(){
+    var input = this.state.screen.substring(0, this.state.screen.length - 1);
     this.setState({
       screen: input,
     });
@@ -32,7 +40,7 @@ class App extends Component {
           <div className="d-flex justify-content-center mt-5">
             <input type="button" className="btn btn-danger mx-2" value ="C"/>
             <input type="button" className="btn btn-primary mx-2 invisible"/>
-            <input type="button" className="btn btn-warning mx-2" value ="DEL"/>
+            <input type="button" onClick={this.deleteValue} className="btn btn-warning mx-2" value ="DEL"/>
             <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="/"/>
           </div>         
           <div className="d-flex justify-content-center mt-2">
