@@ -1,5 +1,7 @@
 .App {
-  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  color: white;
 }
 
 .App-logo {
@@ -35,4 +37,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.result {
+  border: 0;
+  width: 500px;
+  height: 70px;
+  resize: none;
+  text-align: center;
+  font-size: 30px;
+}
+
+.btn {
+  width: 100px;
 }
