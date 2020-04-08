@@ -12,6 +12,7 @@ class App extends Component {
     
     this.inputValue = this.inputValue.bind(this);
     this.deleteValue = this.deleteValue.bind(this);
+    this.clearScreen = this.clearScreen.bind(this);
   }
 
   inputValue(e){
@@ -28,6 +29,12 @@ class App extends Component {
     });
   }
 
+  clearScreen(){
+    this.setState({
+      screen: ""
+    })
+  }
+
   render(){
     return (
       <div className="App pt-5">
@@ -38,7 +45,7 @@ class App extends Component {
           </div>
 
           <div className="d-flex justify-content-center mt-5">
-            <input type="button" className="btn btn-danger mx-2" value ="C"/>
+            <input type="button" onClick={this.clearScreen} className="btn btn-danger mx-2" value ="C"/>
             <input type="button" className="btn btn-primary mx-2 invisible"/>
             <input type="button" onClick={this.deleteValue} className="btn btn-warning mx-2" value ="DEL"/>
             <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="/"/>
