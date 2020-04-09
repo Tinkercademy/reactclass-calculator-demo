@@ -37,7 +37,9 @@ class App extends Component {
   }
 
   calcValue(){
-    var calculation = eval(this.state.screen);
+    var percent = this.state.screen.replace(/%/g, "*0.01");
+    var power = percent.replace(/\^/g, "**");
+    var calculation = eval(power);
     this.setState({
       screen: calculation.toString()
     })
@@ -56,6 +58,8 @@ class App extends Component {
             <input type="button" onClick={this.clearScreen} className="btn btn-danger mx-2" value ="C"/>
             <input type="button" className="btn btn-primary mx-2 invisible"/>
             <input type="button" onClick={this.deleteValue} className="btn btn-warning mx-2" value ="DEL"/>
+            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="√"/>
+            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="^"/>
           </div>         
           <div className="d-flex justify-content-center mt-2">
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="7"/>
@@ -82,7 +86,7 @@ class App extends Component {
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="00"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="0"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="."/>
-            <input type="button" className="btn btn-primary mx-2 invisible"/>
+            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="%"/>
             <input type="button" onClick={this.calcValue} className="btn btn-success mx-2" value ="="/>
           </div>
       </div>
