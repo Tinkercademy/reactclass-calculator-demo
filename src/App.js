@@ -56,30 +56,33 @@ class App extends Component {
             <input type="button" onClick={this.clearScreen} className="btn btn-danger mx-2" value ="C"/>
             <input type="button" className="btn btn-primary mx-2 invisible"/>
             <input type="button" onClick={this.deleteValue} className="btn btn-warning mx-2" value ="DEL"/>
-            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="/"/>
           </div>         
           <div className="d-flex justify-content-center mt-2">
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="7"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="8"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="9"/>
-            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="*"/>
+            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="("/>
+            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value =")"/>
           </div>
           <div className="d-flex justify-content-center mt-2">
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="4"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="5"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="6"/>
+            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="/"/>
             <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="-"/>
           </div>
           <div className="d-flex justify-content-center mt-2">
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="1"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="2"/>
-            <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="3"/>
+            <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="3"/>           
+            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="*"/>
             <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="+"/>
           </div>
           <div className="d-flex justify-content-center mt-2">
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="00"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="0"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="."/>
+            <input type="button" className="btn btn-primary mx-2 invisible"/>
             <input type="button" onClick={this.calcValue} className="btn btn-success mx-2" value ="="/>
           </div>
       </div>
