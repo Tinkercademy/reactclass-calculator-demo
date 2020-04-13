@@ -39,15 +39,24 @@
   }
 }
 
-.result {
+.screen {
   border: 0;
   width: 500px;
   height: 70px;
   resize: none;
-  text-align: center;
+  text-align: right;
   font-size: 30px;
 }
 
 .btn {
   width: 100px;
+}
+
+.subscreen {
+  border: 0;
+  width: 500px;
+  height: 35px;
+  resize: none;
+  text-align: right;
+  font-size: 15px;
 }

@@ -7,11 +7,18 @@ class App extends Component {
 		super();
 
 		this.state = {
-      screen: "", 
-      memory: "0"
+      screen: "",
+      hiddenscreen: "",
+      subscreen: "", 
+      memory: "0",
+      operatorIsApplied: false,
+      sqrtIsApplied: false,
+      parenthesesOpened: false,
     };
     
     this.inputValue = this.inputValue.bind(this);
+    this.inputOperator = this.inputOperator.bind(this);
+    this.inputSqrt = this.inputSqrt.bind(this);
     this.deleteValue = this.deleteValue.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
     this.calcValue = this.calcValue.bind(this);
@@ -21,10 +28,72 @@ class App extends Component {
   }
 
   inputValue(e){
-    var input = this.state.screen + e.target.value;
+    if(this.state.operatorIsApplied){
+      this.setState({
+        screen: ""
+      });
+      this.setState({
+        screen: e.target.value,
+        operatorIsApplied: false
+      });
+    }else{
+      var input = this.state.screen + e.target.value;
+      this.setState({
+        screen: input,
+      });
+    }
+
+    if(e.target.value == "("){
+      this.setState({
+        parenthesesOpened: true
+      })
+    }else if(e.target.value == ")"){
+      this.setState({
+        parenthesesOpened: false
+      })
+    }
+  }
+
+  inputOperator(e){
+    
+    if(this.state.sqrtIsApplied){
+      this.setState({
+        subscreen: this.state.subscreen + e.target.value,
+        hiddenscreen: this.state.hiddenscreen + e.target.value,
+        operatorIsApplied: true,
+        sqrtIsApplied: false
+      });
+    }else{
+      var input = this.state.screen + e.target.value;
+      this.setState({
+        subscreen: this.state.subscreen + input,
+        hiddenscreen: this.state.hiddenscreen + input,
+        operatorIsApplied: true
+      }, () => {
+        if(this.state.hiddenscreen !== "" && !this.state.parenthesesOpened){
+          var toBeCalculated = this.state.hiddenscreen.substring(0, this.state.hiddenscreen.length - 1);
+          var percent = toBeCalculated.replace(/%/g, "*0.01");
+          var memory = percent.replace(/Mr/g, this.state.memory);
+          var power = memory.replace(/\^/g, "**");
+          var calculation = eval(power);
+          this.setState({
+            screen: calculation.toString()
+          })
+        }
+      })
+    }
+  }
+
+  inputSqrt(e){
+    var input = e.target.value + "(" + this.state.screen + ")";
+    var sqrt = parseInt(this.state.screen) **0.5;
     this.setState({
-      screen: input,
-    });
+      subscreen: this.state.subscreen + input,
+      hiddenscreen: this.state.hiddenscreen + sqrt.toString(),
+      screen: sqrt.toString(),
+      operatorIsApplied: true,
+      sqrtIsApplied: true
+    })
   }
 
   deleteValue(){
@@ -45,16 +114,27 @@ class App extends Component {
   clearScreen(){
     this.setState({
       screen: "",
+      subscreen: "",
+      hiddenscreen: "",
+      operatorIsApplied: false,
+      sqrtIsApplied: false
     })
   }
 
   calcValue(){
-    var percent = this.state.screen.replace(/%/g, "*0.01");
+    if(this.state.sqrtIsApplied){
+      var toBeCalculated = this.state.hiddenscreen;
+    }else{
+      toBeCalculated = this.state.hiddenscreen + this.state.screen;
+    }
+    var percent = toBeCalculated.replace(/%/g, "*0.01");
     var memory = percent.replace(/Mr/g, this.state.memory);
     var power = memory.replace(/\^/g, "**");
     var calculation = eval(power);
     this.setState({
-      screen: calculation.toString()
+      screen: calculation.toString(),
+      subscreen: "",
+      hiddenscreen: ""
     })
   }
 
@@ -84,7 +164,10 @@ class App extends Component {
           <h1 className="d-flex justify-content-center">Calculator</h1>
 
           <div className="d-flex justify-content-center mt-5">
-            <textarea className="result" value={this.state.screen} readOnly></textarea>
+            <textarea className="subscreen" value={this.state.subscreen} readOnly></textarea>
+          </div>
+          <div className="d-flex justify-content-center">
+            <textarea className="screen" value={this.state.screen} readOnly></textarea>
           </div>
 
           <div className="d-flex justify-content-center mt-5">
@@ -100,7 +183,7 @@ class App extends Component {
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="8"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="9"/>
             <input type="button" onClick={this.clearMemory} className="btn btn-secondary mx-2" value ="Mc"/>
-            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="√"/>
+            <input type="button" onClick={this.inputSqrt} className="btn btn-success mx-2" value ="√"/>
             <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="^"/>
           </div>
           <div className="d-flex justify-content-center mt-2">
@@ -108,16 +191,16 @@ class App extends Component {
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="5"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="6"/>
             <input type="button" onClick={this.addMemory} className="btn btn-secondary mx-2" value ="M+"/>
-            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="/"/>
-            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="-"/>
+            <input type="button" onClick={this.inputOperator} className="btn btn-success mx-2" value ="/"/>
+            <input type="button" onClick={this.inputOperator} className="btn btn-success mx-2" value ="-"/>
           </div>
           <div className="d-flex justify-content-center mt-2">
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="1"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="2"/>
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="3"/>
             <input type="button" onClick={this.minusMemory} className="btn btn-secondary mx-2" value ="M-"/>           
-            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="*"/>
-            <input type="button" onClick={this.inputValue} className="btn btn-success mx-2" value ="+"/>
+            <input type="button" onClick={this.inputOperator} className="btn btn-success mx-2" value ="*"/>
+            <input type="button" onClick={this.inputOperator} className="btn btn-success mx-2" value ="+"/>
           </div>
           <div className="d-flex justify-content-center mt-2">
             <input type="button" onClick={this.inputValue} className="btn btn-primary mx-2" value ="00"/>
